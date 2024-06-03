@@ -1,5 +1,5 @@
 const asyncHandler = require("express-async-handler");
-const { body, validationResult } = require("express-validator");
+const { body, query, validationResult } = require("express-validator");
 const validator = require("validator");
 
 // models required
@@ -43,8 +43,8 @@ exports.user_create_post = [
 })];
 
 // Show logs by user
-exports.user_log_get = asyncHandler(async (req, res, next) => {
-
+exports.user_log_get =
+    asyncHandler(async (req, res, next) => {
     /* Set Filters */
 
     // create filter object to pass into "Exercise.find()"
@@ -54,6 +54,7 @@ exports.user_log_get = asyncHandler(async (req, res, next) => {
 
     const dateFilter = {};
     // validate "from" and add to filter if valid.
+    // this is in a try catch block as isDate throwing error for 4 digit strings.
     try {
         if(validator.isDate(req.query.from)){
             dateFilter.$gte = req.query.from;
@@ -63,6 +64,7 @@ exports.user_log_get = asyncHandler(async (req, res, next) => {
     }
 
     // validate "to" and add to filter if valid
+    // this is in a try catch block as isDate throwing error for 4 digit strings.
     try {
         if(validator.isDate(req.query.to)){
             dateFilter.$lte = req.query.to;
