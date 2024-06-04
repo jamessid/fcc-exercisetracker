@@ -163,7 +163,7 @@ exports.exercise_create_post = [
                 username: user.username,
                 description: exercise.description,
                 duration: exercise.duration,
-                date: exercise.date,
+                date: exercise.date.toDateString(),
                 _id: exercise._id,
             });
         }
