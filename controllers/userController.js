@@ -1,5 +1,5 @@
 const asyncHandler = require("express-async-handler");
-const { body, query, validationResult } = require("express-validator");
+const { body, param, query, validationResult } = require("express-validator");
 const validator = require("validator");
 
 // models required
@@ -122,7 +122,7 @@ exports.user_log_get =
 // Create new exercise
 exports.exercise_create_post = [
     // Validation
-    body(":_id")
+    param("id")
         .custom(async value => {
             const user = await User.findById(value);
             if (!user){
@@ -145,7 +145,7 @@ exports.exercise_create_post = [
 
         // create new exercise
         const exercise = new Exercise ({
-            user: req.body[":_id"],
+            user: req.params.id,
             description: req.body.description,
             duration: req.body.duration,
             date: req.body.date || Date.now(),
